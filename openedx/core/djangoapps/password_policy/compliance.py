@@ -125,7 +125,17 @@ def _get_compliance_deadline_for_user(user):
 
     if staff_deadline and user.is_staff:
         return staff_deadline
-    elif elevated_privilege_user_deadline and user.courseaccessrole_set.exists():
+    elif elevated_privilege_user_deadline and _user_has_course_access_role(user):
         return elevated_privilege_user_deadline
     else:
         return general_user_deadline
+
+
+def _user_has_course_access_role(user):
+    """
+    Returns a boolean indicating whether or not the user is known to have at least one course access role.
+    """
+    try:
+        return user.courseaccessrole_set.exists():
+    except:
+        return False
