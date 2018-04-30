@@ -13,10 +13,6 @@ from util.date_utils import strftime_localized, DEFAULT_SHORT_DATE_FORMAT
 from util.password_policy_validators import validate_password
 
 
-# The name of the Group used to track the users that are known to be compliant with password policy requirements.
-PASSWORD_POLICY_COMPLIANT_USERS_GROUP_NAME = 'password_policy.compliant.users'
-
-
 class NonCompliantPasswordException(Exception):
     """
     Exception that should be raised when a user who is required to be compliant with password policy requirements
@@ -98,41 +94,14 @@ def _rollout_config():
 def _check_user_compliance(user, password):
     """
     Returns a boolean indicating whether or not the user is compliant with password policy rules.
-
-    A user is considered to be compliant if any of the following are true:
-    - They are a member of the PASSWORD_POLICY_COMPLIANT_USERS_GROUP_NAME Group
-    - The provided password argument meets current password policy requirements.
-
-    In the event that a user that is not a member of the PASSWORD_POLICY_COMPLIANT_USERS_GROUP_NAME Group is found to
-    be compliant, this method will attempt to add them to that Group before returning.
     """
-
-    # Check if the user is a member of the compliant users group.
-    try:
-        if user.groups.filter(name=PASSWORD_POLICY_COMPLIANT_USERS_GROUP_NAME).exists():
-            return True
-    except:
-        # If we fail to verify group membership, fallback to checking the password again.
-        pass
-
-    # Check if the user's password meets current policy requirements.
     try:
         validate_password(password, user=user)
-        is_compliant = True
+        return True
     except:
         # If anything goes wrong, we should assume the password is not compliant but we don't necessarily
         # need to prevent login.
-        is_compliant = False
-
-    # If the password was confirmed to be compliant, add the user to compliant users group.
-    if is_compliant:
-        try:
-            user.groups.add(Group.objects.get(name=PASSWORD_POLICY_COMPLIANT_USERS_GROUP_NAME))
-        except:
-            # Failing to add the user to the compliant users group is not a reason to prevent login.
-            pass
-
-    return is_compliant
+        return False
 
 
 def _get_compliance_deadline_for_user(user):
