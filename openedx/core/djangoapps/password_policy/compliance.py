@@ -136,6 +136,6 @@ def _user_has_course_access_role(user):
     Returns a boolean indicating whether or not the user is known to have at least one course access role.
     """
     try:
-        return user.courseaccessrole_set.exists():
+        return user.courseaccessrole_set.exists()
     except:
         return False
