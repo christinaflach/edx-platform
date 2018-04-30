@@ -26,8 +26,4 @@ def plugin_settings(settings):
         # This should be a timezone-aware date string parsable by dateutils.parser.parse
         # Ex: 2018-04-19 00:00:00+00:00
         'GENERAL_USER_COMPLIANCE_DEADLINE': None,
-
-        # The number of days before the compliance deadline that we will display a warning to non-compliant users that
-        # they will be forced to reset their password.
-        'WARNING_PERIOD_DAYS': 30
     }
