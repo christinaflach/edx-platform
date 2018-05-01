@@ -1,11 +1,4 @@
 from oauth2_provider.models import AccessToken, Application, Grant, RefreshToken
-from oauth_provider.models import Consumer, Token
-from provider.oauth2.models import (
-    AccessToken as dopAccessToken,
-    Grant as dopGrant,
-    RefreshToken as dopRefreshToken
-)
-
 
 def delete_user_from(model, user_id):
     user_query_results = model.objects.filter(user_id=user_id)
@@ -20,10 +13,10 @@ def delete_from_oauth2_provider_accesstoken(user):
     return delete_user_from(model=AccessToken, user_id=user.id)
 
 def delete_from_oauth2_provider_application(user):
-    return delete_user_from(model=AccessToken, user_id=user.id)
+    return delete_user_from(model=Application, user_id=user.id)
 
 def delete_from_oauth2_provider_grant(user):
-    return delete_user_from(model=AccessToken, user_id=user.id)
+    return delete_user_from(model=Grant, user_id=user.id)
 
 def delete_from_oauth2_provider_refreshtoken(user):
-    return delete_user_from(model=AccessToken, user_id=user.id)
+    return delete_user_from(model=RefreshToken, user_id=user.id)
