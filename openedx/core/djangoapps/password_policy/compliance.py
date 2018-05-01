@@ -23,7 +23,7 @@ class NonCompliantPasswordException(Exception):
 
 class NonCompliantPasswordWarning(Exception):
     """
-    Exception that should be raised when a user who will soon be required to be compliant with password policy 
+    Exception that should be raised when a user who will soon be required to be compliant with password policy
     requirements is found to have a non-compliant password.
     """
     pass
