@@ -84,11 +84,11 @@ function($, Backbone, _, AbstractEditor, Utils, MessageManager) {
          */
         showServerError: function(response) {
             var errorMessage = gettext('Error: Connection with server failed.');
+
             if (response.responseJSON !== undefined) {
                 errorMessage = response.responseJSON.status;
-            } else {
-                errorMessage = gettext('Error: Connection with server failed.');
             }
+
             this.messenger
                 .render('not_found')
                 .showError(

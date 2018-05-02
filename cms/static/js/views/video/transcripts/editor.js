@@ -215,6 +215,9 @@ function($, Backbone, _, Utils, MetadataView, MetadataCollection) {
             return this.$el.closest('[data-locator]').data('locator');
         },
 
+        /**
+         * Event handler for `transcripts:basicTabFieldChanged` event.
+         */
         handleFieldChanged: function() {
             var views = this.settingsView.views,
                 videoURLSView = views.video_url,
